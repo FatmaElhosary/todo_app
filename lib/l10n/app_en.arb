@@ -1,3 +1,6 @@
 {
-    "todo":"To Do List"
+    "todo":"To Do List",
+    "language":"Language",
+    "mode":"Mode",
+    "settings":"Settings"
 }
