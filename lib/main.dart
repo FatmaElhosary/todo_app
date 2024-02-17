@@ -8,7 +8,7 @@ import 'package:todo_app/tabs/settings_tab/settings_tab.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(
-      create: (context) => SettingsProvider(), child: const TodoApp()));
+      create: (context) => SettingsProvider()..initalizeSettings(), child: const TodoApp()));
 }
 
 class TodoApp extends StatelessWidget {
