@@ -10,17 +10,28 @@ class SettingsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppLocalizations appLocal = AppLocalizations.of(context)!;
-    return Scaffold(
-        backgroundColor: Colors.grey,
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(appLocal.language),
-            const DropDownLanguage(),
-            Text(appLocal.mode),
-            const DropDownSettings(),
-          ],
-        ));
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: Column(
+        //  mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const SizedBox(
+            height: 25,
+          ),
+          Text(
+            appLocal.language,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const DropDownLanguage(),
+          Text(
+            appLocal.mode,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const DropDownSettings(),
+        ],
+      ),
+    );
   }
 }
