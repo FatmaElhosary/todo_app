@@ -2,5 +2,10 @@
     "todo":"To Do List",
     "language":"Language",
     "mode":"Mode",
-    "settings":"Settings"
+    "settings":"Settings",
+    "dark":"Dark",
+    "light":"Light",
+    "system":"System",
+    "arabic":"Arabic",
+    "english":"English"
 }

@@ -25,13 +25,13 @@ class TodoApp extends StatelessWidget {
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         themeMode: provier.appTheme,
-        /*  routes: {
+         routes: {
           HomeScreen.routeName: (_) => const HomeScreen(),
-        }, */
+        },
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         locale: Locale(provier.appLanguage),
-        home: SettingsTab(),
+    
       );
     });
   }

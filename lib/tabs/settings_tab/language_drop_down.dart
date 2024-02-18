@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/providers/settings_provider.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 enum LanguageLabel {
-  english('English', 'en'),
-  arabic('Arabic', 'ar');
+  english('english', 'en'),
+  arabic('arabic', 'ar');
 
   const LanguageLabel(this.label, this.language);
   final String label;
@@ -16,7 +18,12 @@ class DropDownLanguage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppLocalizations appLocal = AppLocalizations.of(context)!;
     SettingsProvider provider = Provider.of<SettingsProvider>(context);
+    final languages = {
+      "english": appLocal.english,
+      "arabic": appLocal.arabic,
+    };
     return DropdownMenu<LanguageLabel>(
       initialSelection: provider.appLanguage == 'en'
           ? LanguageLabel.english
@@ -30,7 +37,10 @@ class DropDownLanguage extends StatelessWidget {
           .map<DropdownMenuEntry<LanguageLabel>>((LanguageLabel lang) {
         return DropdownMenuEntry(
           value: lang,
-          label: lang.label,
+          //lang.label
+          label: languages.entries
+              .firstWhere((element) => element.key == lang.label)
+              .value,
           style: MenuItemButton.styleFrom(
               //foregroundtheme: Color(0xfffffff),
               ),

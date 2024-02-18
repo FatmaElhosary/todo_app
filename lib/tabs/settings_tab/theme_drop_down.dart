@@ -1,37 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/providers/settings_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-enum ThemeLabel {
-  light('light', ThemeMode.light),
-  dark('dark', ThemeMode.dark),
-  system('system', ThemeMode.system);
-
-  const ThemeLabel(this.label, this.mode);
+class ThemeLabel {
+  const ThemeLabel({required this.label, required this.mode});
   final String label;
   final ThemeMode mode;
 }
 
 class DropDownSettings extends StatelessWidget {
-const  DropDownSettings({super.key});
+  const DropDownSettings({super.key});
 
   @override
   Widget build(BuildContext context) {
     SettingsProvider provider = Provider.of<SettingsProvider>(context);
-    return DropdownMenu(
-      initialSelection: provider.currentMode == ThemeMode.light
-          ? ThemeLabel.light
-          : provider.currentMode == ThemeMode.dark
-              ? ThemeLabel.dark
-              : ThemeLabel.system,
+    AppLocalizations appLocal = AppLocalizations.of(context)!;
+    final themes = [
+      ThemeLabel(label: appLocal.light, mode: ThemeMode.light),
+      ThemeLabel(label: appLocal.dark, mode: ThemeMode.dark),
+      ThemeLabel(label: appLocal.light, mode: ThemeMode.system)
+    ];
+
+    return DropdownMenu<ThemeLabel>(
+      initialSelection:
+          themes.firstWhere((theme) => theme.mode == provider.currentMode),
       onSelected: (theme) => {
         if (theme != null) {provider.changeAppTheme(theme.mode)}
       },
-      dropdownMenuEntries: ThemeLabel.values
-          .map<DropdownMenuEntry<ThemeLabel>>((ThemeLabel theme) {
+      dropdownMenuEntries:
+          themes.map<DropdownMenuEntry<ThemeLabel>>((ThemeLabel theme) {
         return DropdownMenuEntry(
           value: theme,
-          label: theme.label,
+          label: theme.label, //theme.label,
           style: MenuItemButton.styleFrom(
               //foregroundtheme: Color(0xfffffff),
               ),
