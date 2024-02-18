@@ -22,22 +22,26 @@ class DropDownSettings extends StatelessWidget {
       ThemeLabel(label: appLocal.light, mode: ThemeMode.system)
     ];
 
-    return DropdownMenu<ThemeLabel>(
-      initialSelection:
-          themes.firstWhere((theme) => theme.mode == provider.currentMode),
-      onSelected: (theme) => {
-        if (theme != null) {provider.changeAppTheme(theme.mode)}
-      },
-      dropdownMenuEntries:
-          themes.map<DropdownMenuEntry<ThemeLabel>>((ThemeLabel theme) {
-        return DropdownMenuEntry(
-          value: theme,
-          label: theme.label, //theme.label,
-          style: MenuItemButton.styleFrom(
-              //foregroundtheme: Color(0xfffffff),
-              ),
-        );
-      }).toList(),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      child: DropdownMenu<ThemeLabel>(
+        expandedInsets: const EdgeInsets.all(0),
+        initialSelection:
+            themes.firstWhere((theme) => theme.mode == provider.currentMode),
+        onSelected: (theme) => {
+          if (theme != null) {provider.changeAppTheme(theme.mode)}
+        },
+        dropdownMenuEntries:
+            themes.map<DropdownMenuEntry<ThemeLabel>>((ThemeLabel theme) {
+          return DropdownMenuEntry(
+            value: theme,
+            label: theme.label, //theme.label,
+            style: MenuItemButton.styleFrom(
+                //foregroundtheme: Color(0xfffffff),
+                ),
+          );
+        }).toList(),
+      ),
     );
   }
 }

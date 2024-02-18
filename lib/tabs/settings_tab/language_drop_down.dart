@@ -24,28 +24,33 @@ class DropDownLanguage extends StatelessWidget {
       "english": appLocal.english,
       "arabic": appLocal.arabic,
     };
-    return DropdownMenu<LanguageLabel>(
-      initialSelection: provider.appLanguage == 'en'
-          ? LanguageLabel.english
-          : LanguageLabel.arabic,
-      onSelected: (language) {
-        if (language != null) {
-          provider.changeLanguage(language.language);
-        }
-      },
-      dropdownMenuEntries: LanguageLabel.values
-          .map<DropdownMenuEntry<LanguageLabel>>((LanguageLabel lang) {
-        return DropdownMenuEntry(
-          value: lang,
-          //lang.label
-          label: languages.entries
-              .firstWhere((element) => element.key == lang.label)
-              .value,
-          style: MenuItemButton.styleFrom(
-              //foregroundtheme: Color(0xfffffff),
-              ),
-        );
-      }).toList(),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      child: DropdownMenu<LanguageLabel>(
+    
+        expandedInsets: const EdgeInsets.all(0),
+        initialSelection: provider.appLanguage == 'en'
+            ? LanguageLabel.english
+            : LanguageLabel.arabic,
+        onSelected: (language) {
+          if (language != null) {
+            provider.changeLanguage(language.language);
+          }
+        },
+        dropdownMenuEntries: LanguageLabel.values
+            .map<DropdownMenuEntry<LanguageLabel>>((LanguageLabel lang) {
+          return DropdownMenuEntry(
+            value: lang,
+            //lang.label
+            label: languages.entries
+                .firstWhere((element) => element.key == lang.label)
+                .value,
+            style: MenuItemButton.styleFrom(
+              textStyle: Theme.of(context).textTheme.labelSmall,
+            ),
+          );
+        }).toList(),
+      ),
     );
   }
 }
