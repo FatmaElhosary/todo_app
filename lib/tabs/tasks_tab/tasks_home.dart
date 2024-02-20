@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_app/tabs/tasks_tab/task_widget.dart';
 import 'package:todo_app/tabs/tasks_tab/tasks_calender.dart';
 
 class TasksHome extends StatelessWidget {
@@ -6,10 +8,15 @@ class TasksHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        TasksCalender(),
-        
+        const TasksCalender(),
+        Expanded(
+            child: ListView.builder(
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          itemBuilder: (context, index) => const TaskWidget(),
+          itemCount: 5,
+        )),
       ],
     );
   }

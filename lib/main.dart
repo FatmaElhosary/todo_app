@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/app_theme.dart';
 import 'package:todo_app/providers/settings_provider.dart';
+import 'package:todo_app/screens/edit_task.dart';
 import 'package:todo_app/screens/home_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 void main() {
   runApp(ChangeNotifierProvider(
-      create: (context) => SettingsProvider()..initalizeSettings(), child: const TodoApp()));
+      create: (context) => SettingsProvider()..initalizeSettings(),
+      child: const TodoApp()));
 }
 
 class TodoApp extends StatelessWidget {
@@ -25,13 +26,13 @@ class TodoApp extends StatelessWidget {
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         themeMode: provier.appTheme,
-         routes: {
+        routes: {
           HomeScreen.routeName: (_) => const HomeScreen(),
+          EditTask.routName: (context) => const EditTask(),
         },
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         locale: Locale(provier.appLanguage),
-    
       );
     });
   }
