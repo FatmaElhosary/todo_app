@@ -23,12 +23,12 @@ class TasksCalender extends StatelessWidget {
         headerMonthBackColor: Colors.transparent,
       ),
       dayOptions: DayOptions(
-          compactMode: true,
-          weekDaySelectedColor: theme.colorScheme.primary,
-          selectedBackgroundColor: theme.colorScheme.primary,
-          // weekDayUnselectedColor: theme.colorScheme.onPrimaryContainer,
-          disableDaysBeforeNow: false,
-          todayBackgroundColor: Colors.red),
+        compactMode: true,
+        weekDaySelectedColor: theme.colorScheme.primary,
+        selectedBackgroundColor: theme.colorScheme.primary,
+        // weekDayUnselectedColor: theme.colorScheme.onPrimaryContainer,
+        disableDaysBeforeNow: false,
+      ),
       headerOptions: HeaderOptions(
           weekDayStringType: WeekDayStringTypes.SHORT,
           monthStringType: MonthStringTypes.FULL,
@@ -37,7 +37,7 @@ class TasksCalender extends StatelessWidget {
           navigationColor: theme.colorScheme.primaryContainer,
           resetDateColor: theme.colorScheme.primaryContainer),
       onChangeDateTime: (datetime) {
-        print(datetime.getDate());
+        //  print(datetime.getDate());
       },
     );
   }

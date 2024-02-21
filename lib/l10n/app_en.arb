@@ -12,5 +12,8 @@
     "enterTask":"Enter Task Title",
     "enterTaskDetails":"Enter Task Details",
     "add":"Add",
-    "selectDate":"Select Date"
+    "selectDate":"Select Date",
+    "editTask":"Edit Task",
+    "saveChanges":"Save Changes",
+    "done":"Done !"
 }

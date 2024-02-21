@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/app_theme.dart';
 import 'package:todo_app/screens/edit_task.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class TaskWidget extends StatelessWidget {
+class TaskWidget extends StatefulWidget {
   const TaskWidget({super.key});
 
   @override
+  State<TaskWidget> createState() => _TaskWidgetState();
+}
+
+class _TaskWidgetState extends State<TaskWidget> {
+  bool isPressed = false;
+  @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+
     return Container(
       padding:
           const EdgeInsetsDirectional.symmetric(horizontal: 17, vertical: 20),
@@ -20,7 +29,7 @@ class TaskWidget extends StatelessWidget {
           Container(
             height: 50,
             width: 4,
-            color: theme.colorScheme.primary,
+            color: !isPressed ? theme.colorScheme.primary : AppTheme.greenColor,
             margin: const EdgeInsetsDirectional.only(end: 20),
           ),
           Column(
@@ -33,10 +42,11 @@ class TaskWidget extends StatelessWidget {
                   Navigator.of(context).pushNamed(EditTask.routName);
                 },
                 child: Text('task sfh  dhr gt',
-                    style: theme.textTheme.titleSmall!.copyWith(
-                      color: theme.colorScheme.primary,
-                      fontSize: 18,
-                    )),
+                    style: !isPressed
+                        ? theme.textTheme.titleSmall!.copyWith(
+                            color: theme.colorScheme.primary, fontSize: 18)
+                        : Theme.of(context).textTheme.titleSmall!.copyWith(
+                            color: AppTheme.greenColor, fontSize: 18)),
               ),
               Text(
                 'details',
@@ -45,20 +55,40 @@ class TaskWidget extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          Container(
-            width: 69,
-            height: 34,
-            decoration: BoxDecoration(
-                color: theme.colorScheme.primary,
-                borderRadius: BorderRadius.circular(10)),
-            child: Image.asset(
-              'assets/images/check_icon.png',
-              width: 30,
-              height: 30,
+          InkWell(
+            onTap: () {
+              markTaskAsDone();
+            },
+            child: Container(
+              width: 69,
+              height: 34,
+              decoration: BoxDecoration(
+                  color: !isPressed
+                      ? theme.colorScheme.primary
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(10)),
+              child: !isPressed
+                  ? Image.asset(
+                      'assets/images/check_icon.png',
+                      width: 30,
+                      height: 30,
+                    )
+                  : Text(
+                      AppLocalizations.of(context)!.done,
+                      style: theme.textTheme.titleSmall!.copyWith(
+                        color: AppTheme.greenColor,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
             ),
           )
         ],
       ),
     );
+  }
+
+  void markTaskAsDone() {
+    isPressed = !isPressed;
+    setState(() {});
   }
 }

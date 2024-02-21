@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
+  static const Color greenColor = Color(0xFF61E757);
   static ThemeData lightTheme = ThemeData(
       primaryColor: Colors.white,
       colorScheme: ColorScheme.fromSeed(
@@ -12,7 +13,6 @@ class AppTheme {
           onBackground: const Color(0xFFFFFFFF),
           onPrimaryContainer: const Color(0xFF363636),
           outline: const Color(0xFF5D9CEC),
-          //const Color(0xFF61E757)
           onErrorContainer: const Color(0xFFEC4B4B),
           seedColor: const Color.fromRGBO(33, 150, 243, 1)),
       useMaterial3: true,

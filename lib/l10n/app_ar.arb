@@ -12,5 +12,8 @@
     "enterTask":" عنوان المهمة",
     "enterTaskDetails":" تفاصيل المهمة",
     "add":"أضف",
-    "selectDate":"إختر التاريخ"
+    "selectDate":"إختر التاريخ",
+    "editTask":"تعديل المهمة",
+    "saveChanges":"حفظ التعديلات",
+    "done":"إنتهت !"
 }

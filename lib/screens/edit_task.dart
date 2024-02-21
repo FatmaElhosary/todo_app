@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/widgets/text_form_field.dart';
+import 'package:todo_app/widgets/edit_task_form.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditTask extends StatelessWidget {
@@ -11,6 +11,7 @@ class EditTask extends StatelessWidget {
     final AppLocalizations appLocal = AppLocalizations.of(context)!;
     final ThemeData theme = Theme.of(context);
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       appBar: AppBar(
         title: Text(appLocal.todo),
         titleSpacing: MediaQuery.of(context).size.width * .12,
@@ -22,17 +23,25 @@ class EditTask extends StatelessWidget {
         elevation: 0,
         toolbarHeight: MediaQuery.of(context).size.height * .15,
       ),
-      body: Form(
-        child: Column(
-          children: [
-            GlobalTextField(
-              hint: '',
+      body: Stack(
+        children: [
+          ColoredBox(
+            color: Theme.of(context).colorScheme.primary,
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height * .09,
+              width: double.infinity,
             ),
-            GlobalTextField(
-              hint: '',
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 30),
+            height: MediaQuery.of(context).size.height * .70,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: theme.colorScheme.primaryContainer,
             ),
-          ],
-        ),
+            child: const EditForm(),
+          ),
+        ],
       ),
     );
   }

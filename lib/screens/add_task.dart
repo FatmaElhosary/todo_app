@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:todo_app/widgets/elaveted_btn.dart';
 import 'package:todo_app/widgets/text_form_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:todo_app/widgets/title_widget.dart';
 
-class AddTask extends StatelessWidget {
-  const AddTask({super.key});
+class AddTask extends StatefulWidget {
+ const AddTask({super.key});
 
+  @override
+  State<AddTask> createState() => _AddTaskState();
+}
+
+class _AddTaskState extends State<AddTask> {
+  final DateFormat dateFormat = DateFormat("dd/MM/yyyy");
+
+  DateTime selectedDate = DateTime.now();
+  final taskController = TextEditingController();
+  final descriptionController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     AppLocalizations local = AppLocalizations.of(context)!;
@@ -14,22 +26,21 @@ class AddTask extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          Text(
-            local.newTask,
-            style:
-                Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 18),
-            textAlign: TextAlign.center,
+          TitleWidget(
+            text: local.newTask,
           ),
           const SizedBox(
             height: 33,
           ),
           GlobalTextField(
+            controller: taskController,
             hint: local.enterTask,
           ),
           const SizedBox(
             height: 33,
           ),
           GlobalTextField(
+            controller: descriptionController,
             hint: local.enterTaskDetails,
             maxLines: 5,
           ),
@@ -39,19 +50,34 @@ class AddTask extends StatelessWidget {
           Align(
             alignment: AlignmentDirectional.centerStart,
             child: Text(
-              'Select Date',
+              local.selectDate,
               style: Theme.of(context).textTheme.labelSmall!.copyWith(
                   fontSize: 20, color: theme.colorScheme.onPrimaryContainer),
             ),
           ),
-          Text(
-            '1/2/1993',
-            style: theme.textTheme.labelSmall,
-            textAlign: TextAlign.center,
+          InkWell(
+            onTap: () async {
+              final selectDate = await showDatePicker(
+                context: context,
+                firstDate: DateTime.now(),
+                lastDate: DateTime.now().add(const Duration(days: 365)),
+                initialDate: DateTime.now(),
+              );
+              if (selectDate != null) {
+                setState(() {
+                  selectedDate = selectDate;
+                });
+              }
+            },
+            child: Text(
+              dateFormat.format(selectedDate),
+              style: theme.textTheme.labelSmall,
+              textAlign: TextAlign.center,
+            ),
           ),
           const Spacer(),
           GlobalButton(
-            text: 'Add',
+            text: local.add,
             onPressed: addTask,
           ),
         ],
@@ -60,6 +86,6 @@ class AddTask extends StatelessWidget {
   }
 
   void addTask() {
-    print('add');
+   // print('add');
   }
 }

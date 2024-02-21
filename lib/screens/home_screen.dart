@@ -98,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: 4, color: theme.colorScheme.primaryContainer)),
         onPressed: () {
           showModalBottomSheet(
-              context: context, builder: (context) => AddTask());
+              context: context, builder: (context) =>const AddTask());
         },
         backgroundColor: theme.colorScheme.primary,
         child: Icon(
