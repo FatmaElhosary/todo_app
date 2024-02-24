@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_app/models/task.dart';
 import 'package:todo_app/widgets/elaveted_btn.dart';
 import 'package:todo_app/widgets/text_form_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -17,12 +18,17 @@ class _EditFormState extends State<EditForm> {
   final taskController = TextEditingController();
   final descriptionController = TextEditingController();
   DateTime selectedDate = DateTime.now();
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    var task = ModalRoute.of(context)!.settings.arguments as Task;
+    taskController.text = task.title;
+    descriptionController.text = task.description;
     final AppLocalizations appLocal = AppLocalizations.of(context)!;
 
     ThemeData theme = Theme.of(context);
     return Form(
+      key: formKey,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 10),
         child: Column(
@@ -33,6 +39,12 @@ class _EditFormState extends State<EditForm> {
             GlobalTextField(
               controller: taskController,
               hint: '',
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Pls Enter task';
+                }
+                return null;
+              },
             ),
             const SizedBox(
               height: 33,
@@ -84,5 +96,8 @@ class _EditFormState extends State<EditForm> {
     );
   }
 
-  void editTask() {}
+  void editTask() {
+    // Validate returns true if the form is valid, or false otherwise.
+    if (formKey.currentState!.validate()) {}
+  }
 }
