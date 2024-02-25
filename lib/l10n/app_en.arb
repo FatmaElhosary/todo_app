@@ -7,5 +7,13 @@
     "light":"Light",
     "system":"System",
     "arabic":"Arabic",
-    "english":"English"
+    "english":"English",
+    "newTask":"Add new Task",
+    "enterTask":"Enter Task Title",
+    "enterTaskDetails":"Enter Task Details",
+    "add":"Add",
+    "selectDate":"Select Date",
+    "editTask":"Edit Task",
+    "saveChanges":"Save Changes",
+    "done":"Done !"
 }

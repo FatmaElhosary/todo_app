@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
+  static const Color greenColor = Color(0xFF61E757);
   static ThemeData lightTheme = ThemeData(
-    primaryColor: Colors.white,
+      primaryColor: Colors.white,
       colorScheme: ColorScheme.fromSeed(
           brightness: Brightness.light,
           primary: const Color(0xFF5D9CEC),
           secondary: const Color(0xFFDFECDB),
           primaryContainer: const Color(0xFFFFFFFF),
+          surface: const Color(0xFFFFFFFF),
           onBackground: const Color(0xFFFFFFFF),
           onPrimaryContainer: const Color(0xFF363636),
           outline: const Color(0xFF5D9CEC),
-          //const Color(0xFF61E757)
           onErrorContainer: const Color(0xFFEC4B4B),
           seedColor: const Color.fromRGBO(33, 150, 243, 1)),
       useMaterial3: true,
@@ -41,14 +42,16 @@ class AppTheme {
       ));
 
   static ThemeData darkTheme = ThemeData(
-       primaryColor: Colors.white,
+    primaryColor: Colors.white,
     colorScheme: ColorScheme.fromSeed(
         brightness: Brightness.dark,
         primaryContainer: const Color(0xFF141922),
+        onPrimaryContainer: const Color(0xFFFFFFFF),
         secondary: const Color(0xFF060E1E),
         outline: const Color(0xFF5D9CEC),
         onPrimary: const Color(0xFF5D9CEC),
-         onBackground: const Color(0xFFFFFFFF),
+        surface: const Color(0xFF141922),
+        onBackground: const Color(0xFFFFFFFF),
         seedColor: Colors.blue),
     useMaterial3: true,
     textTheme: const TextTheme(

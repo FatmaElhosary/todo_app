@@ -19,7 +19,7 @@ class DropDownSettings extends StatelessWidget {
     final themes = [
       ThemeLabel(label: appLocal.light, mode: ThemeMode.light),
       ThemeLabel(label: appLocal.dark, mode: ThemeMode.dark),
-      ThemeLabel(label: appLocal.light, mode: ThemeMode.system)
+      ThemeLabel(label: appLocal.system, mode: ThemeMode.system)
     ];
 
     return Padding(
