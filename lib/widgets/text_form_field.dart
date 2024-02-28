@@ -15,6 +15,7 @@ class GlobalTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      textInputAction: TextInputAction.go,
       validator: validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: controller,

@@ -36,8 +36,8 @@ class _TaskWidgetState extends State<TaskWidget> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              height: 50,
               width: 4,
+              height: 50,
               color:
                   !isPressed ? theme.colorScheme.primary : AppTheme.greenColor,
               margin: const EdgeInsetsDirectional.only(end: 20),
@@ -45,34 +45,19 @@ class _TaskWidgetState extends State<TaskWidget> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                /*   TextButton(
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    alignment: AlignmentDirectional.centerStart,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(
-                      EditTask.routName,
-                      arguments: widget.task,
-                    );
-                  },
-                  child: Text(widget.task.title,
-                      style: !isPressed
-                          ? theme.textTheme.titleSmall!.copyWith(
-                              color: theme.colorScheme.primary, fontSize: 18)
-                          : Theme.of(context).textTheme.titleSmall!.copyWith(
-                              color: AppTheme.greenColor, fontSize: 18)),
-                ),
-                 */
-                Text(widget.task.title,
+                Text(widget.task.title.trim(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: !isPressed
                         ? theme.textTheme.titleSmall!.copyWith(
                             color: theme.colorScheme.primary, fontSize: 18)
                         : Theme.of(context).textTheme.titleSmall!.copyWith(
                             color: AppTheme.greenColor, fontSize: 18)),
                 Text(
-                  widget.task.description,
+                  widget.task.description.trim(),
                   style: theme.textTheme.titleMedium,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 )
               ],
             ),
@@ -115,3 +100,23 @@ class _TaskWidgetState extends State<TaskWidget> {
     setState(() {});
   }
 }
+/*   TextButton(
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    alignment: AlignmentDirectional.centerStart,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(
+                      EditTask.routName,
+                      arguments: widget.task,
+                    );
+                  },
+                  child: Text(widget.task.title,
+                      style: !isPressed
+                          ? theme.textTheme.titleSmall!.copyWith(
+                              color: theme.colorScheme.primary, fontSize: 18)
+                          : Theme.of(context).textTheme.titleSmall!.copyWith(
+                              color: AppTheme.greenColor, fontSize: 18)),
+                ),
+                 */
+                

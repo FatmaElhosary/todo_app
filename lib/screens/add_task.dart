@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/firebase_utils.dart';
+import 'package:todo_app/models/task.dart';
+import 'package:todo_app/tabs/tasks_tab/tasks_provider.dart';
 import 'package:todo_app/widgets/elaveted_btn.dart';
 import 'package:todo_app/widgets/text_form_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo_app/widgets/title_widget.dart';
 
 class AddTask extends StatefulWidget {
- const AddTask({super.key});
+  const AddTask({super.key});
 
   @override
   State<AddTask> createState() => _AddTaskState();
@@ -25,6 +29,7 @@ class _AddTaskState extends State<AddTask> {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           TitleWidget(
             text: local.newTask,
@@ -61,7 +66,7 @@ class _AddTaskState extends State<AddTask> {
                 context: context,
                 firstDate: DateTime.now(),
                 lastDate: DateTime.now().add(const Duration(days: 365)),
-                initialDate: DateTime.now(),
+                initialDate: selectedDate,
               );
               if (selectDate != null) {
                 setState(() {
@@ -86,6 +91,18 @@ class _AddTaskState extends State<AddTask> {
   }
 
   void addTask() {
-   // print('add');
+    // print('add');
+    FirebaseUtils.addTaskToFirestore(Task(
+            title: taskController.text,
+            description: descriptionController.text,
+            dateTime: selectedDate))
+        .timeout(const Duration(milliseconds: 500), onTimeout: () {
+      print('success');
+      Provider.of<TasksProvider>(context, listen: false).getTasks();
+      Navigator.pop(context);
+    }).catchError((onError) {
+      print(onError);
+      Navigator.pop(context);
+    });
   }
 }
