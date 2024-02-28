@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/app_theme.dart';
+import 'package:todo_app/firebase_utils.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/screens/edit_task.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -13,7 +14,6 @@ class TaskWidget extends StatefulWidget {
 }
 
 class _TaskWidgetState extends State<TaskWidget> {
-  bool isPressed = false;
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
@@ -38,8 +38,9 @@ class _TaskWidgetState extends State<TaskWidget> {
             Container(
               width: 4,
               height: 50,
-              color:
-                  !isPressed ? theme.colorScheme.primary : AppTheme.greenColor,
+              color: !widget.task.isDone
+                  ? theme.colorScheme.primary
+                  : AppTheme.greenColor,
               margin: const EdgeInsetsDirectional.only(end: 20),
             ),
             Column(
@@ -48,7 +49,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                 Text(widget.task.title.trim(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: !isPressed
+                    style: !widget.task.isDone
                         ? theme.textTheme.titleSmall!.copyWith(
                             color: theme.colorScheme.primary, fontSize: 18)
                         : Theme.of(context).textTheme.titleSmall!.copyWith(
@@ -64,17 +65,17 @@ class _TaskWidgetState extends State<TaskWidget> {
             const Spacer(),
             InkWell(
               onTap: () {
-                markTaskAsDone();
+                toggleIsdone();
               },
               child: Container(
                 width: 69,
                 height: 34,
                 decoration: BoxDecoration(
-                    color: !isPressed
+                    color: !widget.task.isDone
                         ? theme.colorScheme.primary
                         : Colors.transparent,
                     borderRadius: BorderRadius.circular(10)),
-                child: !isPressed
+                child: !widget.task.isDone
                     ? Image.asset(
                         'assets/images/check_icon.png',
                         width: 30,
@@ -95,8 +96,12 @@ class _TaskWidgetState extends State<TaskWidget> {
     );
   }
 
-  void markTaskAsDone() {
-    isPressed = !isPressed;
+  void toggleIsdone() {
+    widget.task.isDone = !widget.task.isDone;
+    FirebaseUtils.editIsDone(widget.task).timeout(Duration(microseconds: 500),
+        onTimeout: () {
+      print('success');
+    }).catchError((onError) => print(onError));
     setState(() {});
   }
 }
