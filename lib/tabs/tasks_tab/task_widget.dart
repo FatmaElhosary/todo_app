@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/app_theme.dart';
+import 'package:todo_app/firebase_utils.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/screens/edit_task.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -13,7 +14,6 @@ class TaskWidget extends StatefulWidget {
 }
 
 class _TaskWidgetState extends State<TaskWidget> {
-  bool isPressed = false;
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
@@ -36,60 +36,46 @@ class _TaskWidgetState extends State<TaskWidget> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              height: 50,
               width: 4,
-              color:
-                  !isPressed ? theme.colorScheme.primary : AppTheme.greenColor,
+              height: 50,
+              color: !widget.task.isDone
+                  ? theme.colorScheme.primary
+                  : AppTheme.greenColor,
               margin: const EdgeInsetsDirectional.only(end: 20),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                /*   TextButton(
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    alignment: AlignmentDirectional.centerStart,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(
-                      EditTask.routName,
-                      arguments: widget.task,
-                    );
-                  },
-                  child: Text(widget.task.title,
-                      style: !isPressed
-                          ? theme.textTheme.titleSmall!.copyWith(
-                              color: theme.colorScheme.primary, fontSize: 18)
-                          : Theme.of(context).textTheme.titleSmall!.copyWith(
-                              color: AppTheme.greenColor, fontSize: 18)),
-                ),
-                 */
-                Text(widget.task.title,
-                    style: !isPressed
+                Text(widget.task.title.trim(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: !widget.task.isDone
                         ? theme.textTheme.titleSmall!.copyWith(
                             color: theme.colorScheme.primary, fontSize: 18)
                         : Theme.of(context).textTheme.titleSmall!.copyWith(
                             color: AppTheme.greenColor, fontSize: 18)),
                 Text(
-                  widget.task.description,
+                  widget.task.description.trim(),
                   style: theme.textTheme.titleMedium,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 )
               ],
             ),
             const Spacer(),
             InkWell(
               onTap: () {
-                markTaskAsDone();
+                toggleIsdone();
               },
               child: Container(
                 width: 69,
                 height: 34,
                 decoration: BoxDecoration(
-                    color: !isPressed
+                    color: !widget.task.isDone
                         ? theme.colorScheme.primary
                         : Colors.transparent,
                     borderRadius: BorderRadius.circular(10)),
-                child: !isPressed
+                child: !widget.task.isDone
                     ? Image.asset(
                         'assets/images/check_icon.png',
                         width: 30,
@@ -110,8 +96,32 @@ class _TaskWidgetState extends State<TaskWidget> {
     );
   }
 
-  void markTaskAsDone() {
-    isPressed = !isPressed;
+  void toggleIsdone() {
+    widget.task.isDone = !widget.task.isDone;
+    FirebaseUtils.editTaskInFireStore(widget.task)
+        .timeout(const Duration(microseconds: 500), onTimeout: () {
+      print('success');
+    }).catchError((onError) => print(onError));
     setState(() {});
   }
 }
+/*   TextButton(
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    alignment: AlignmentDirectional.centerStart,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(
+                      EditTask.routName,
+                      arguments: widget.task,
+                    );
+                  },
+                  child: Text(widget.task.title,
+                      style: !isPressed
+                          ? theme.textTheme.titleSmall!.copyWith(
+                              color: theme.colorScheme.primary, fontSize: 18)
+                          : Theme.of(context).textTheme.titleSmall!.copyWith(
+                              color: AppTheme.greenColor, fontSize: 18)),
+                ),
+                 */
+                

@@ -39,7 +39,9 @@ class AppTheme {
             fontFamily: 'Inter',
             fontWeight: FontWeight.w400,
             color: Color(0xFF5D9CEC)),
-      ));
+      ),
+     // bottomSheetTheme: BottomSheetThemeData(backgroundColor: )
+      );
 
   static ThemeData darkTheme = ThemeData(
     primaryColor: Colors.white,
