@@ -7,7 +7,7 @@ import 'package:todo_app/providers/settings_provider.dart';
 import 'package:todo_app/screens/edit_task.dart';
 import 'package:todo_app/screens/home_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:todo_app/tabs/tasks_tab/tasks_provider.dart';
+import 'package:todo_app/providers/tasks_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

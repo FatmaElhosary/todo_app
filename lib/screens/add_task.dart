@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/firebase_utils.dart';
 import 'package:todo_app/models/task.dart';
-import 'package:todo_app/tabs/tasks_tab/tasks_provider.dart';
+import 'package:todo_app/providers/tasks_provider.dart';
 import 'package:todo_app/widgets/elaveted_btn.dart';
 import 'package:todo_app/widgets/text_form_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

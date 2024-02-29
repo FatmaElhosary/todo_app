@@ -8,6 +8,7 @@ class TasksProvider with ChangeNotifier {
   TasksProvider() {
     getTasks();
   }
+ 
   Future<void> getTasks() async {
     final allTasks = await FirebaseUtils.getAllTasksFromFirestore();
     tasks = allTasks
@@ -23,7 +24,6 @@ class TasksProvider with ChangeNotifier {
   void changeSelectedDate(DateTime newDate) {
     selectedDate = newDate;
     getTasks();
+    // notifyListeners();
   }
-
-  
 }

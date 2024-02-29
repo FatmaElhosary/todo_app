@@ -6,7 +6,7 @@ import 'package:flutter_timeline_calendar/timeline/model/headers_options.dart';
 import 'package:flutter_timeline_calendar/timeline/utils/calendar_types.dart';
 import 'package:flutter_timeline_calendar/timeline/widget/timeline_calendar.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/tabs/tasks_tab/tasks_provider.dart';
+import 'package:todo_app/providers/tasks_provider.dart';
 
 class TasksCalender extends StatefulWidget {
   const TasksCalender({super.key});

@@ -24,9 +24,8 @@ class FirebaseUtils {
 
   static void deleteTaskFromFirestore(String taskid) {}
 
-  static Future<void> editIsDone(Task task) async {
-    print('------------------');
+  static Future<void> editTaskInFireStore(Task task) async {
     final CollectionReference<Task> tasksCollection = getTasksCollection();
-    return tasksCollection.doc(task.id).update({"isDone": task.isDone});
+    return tasksCollection.doc(task.id).update(task.toJson());
   }
 }

@@ -98,8 +98,8 @@ class _TaskWidgetState extends State<TaskWidget> {
 
   void toggleIsdone() {
     widget.task.isDone = !widget.task.isDone;
-    FirebaseUtils.editIsDone(widget.task).timeout(Duration(microseconds: 500),
-        onTimeout: () {
+    FirebaseUtils.editTaskInFireStore(widget.task)
+        .timeout(const Duration(microseconds: 500), onTimeout: () {
       print('success');
     }).catchError((onError) => print(onError));
     setState(() {});

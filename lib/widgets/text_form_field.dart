@@ -5,12 +5,14 @@ class GlobalTextField extends StatelessWidget {
   final int? maxLines;
   final TextEditingController controller;
   final String? Function(String?)? validator;
-  const GlobalTextField(
-      {super.key,
-      required this.hint,
-      this.maxLines,
-      required this.controller,
-      this.validator});
+
+  const GlobalTextField({
+    super.key,
+    required this.hint,
+    this.maxLines,
+    required this.controller,
+    this.validator,
+  });
 
   @override
   Widget build(BuildContext context) {
