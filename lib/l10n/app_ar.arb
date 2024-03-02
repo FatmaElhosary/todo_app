@@ -15,5 +15,9 @@
     "selectDate":"إختر التاريخ",
     "editTask":"تعديل المهمة",
     "saveChanges":"حفظ التعديلات",
-    "done":"إنتهت !"
+    "done":"إنتهت !",
+    "taskAddedSuccessfully":"تمت الإضافة بنجاح..",
+    "taskAdderror":"لم يتم الاضافة اعد المحاولة!",
+    "taskAupdatedSuccessfully":"تم التعديل بنجاح",
+    "errorTaskEdit":"حدث حطأ حاول مرة اخرى!"
 }
