@@ -7,6 +7,7 @@ import 'package:todo_app/firebase_utils.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/providers/tasks_provider.dart';
 import 'package:todo_app/shared/shared.dart';
+import 'package:todo_app/widgets/date_picker_field.dart';
 import 'package:todo_app/widgets/elaveted_btn.dart';
 import 'package:todo_app/widgets/text_form_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -25,7 +26,7 @@ class _EditFormState extends State<EditForm> {
   late Task task;
   late DateTime selectedDate;
   final formKey = GlobalKey<FormState>();
-  late final AppLocalizations appLocal;
+  late AppLocalizations appLocal;
   @override
   void initState() {
     super.initState();
@@ -94,28 +95,10 @@ class _EditFormState extends State<EditForm> {
                   fontSize: 20, color: theme.colorScheme.onPrimaryContainer),
             ),
           ),
-          InkWell(
-            onTap: () async {
-              final selectDate = await showDatePicker(
-                context: context,
-                firstDate: DateTime.now().subtract(const Duration(days: 365)),
-                lastDate: DateTime.now().add(const Duration(days: 365)),
-                initialDate: task.dateTime,
-              );
-              if (selectDate != null) {
-                task.dateTime = selectDate;
-              }
-            },
-            child: Text(
-              dateFormat.format(task.dateTime),
-              style: theme.textTheme.labelSmall,
-              textAlign: TextAlign.center,
-            ),
+          DatePickerWidget(
+            initialDateTime: task.dateTime,
+            setTaskDate: (dateTime) => task.dateTime = dateTime,
           ),
-
-          /*   DatePickerWidget(
-            dateTime: task.dateTime,
-          ), */
           const SizedBox(
             height: 50,
           ),
@@ -154,3 +137,22 @@ class _EditFormState extends State<EditForm> {
     }
   }
 }
+ /*   InkWell(
+            onTap: () async {
+              final selectDate = await showDatePicker(
+                context: context,
+                firstDate: DateTime.now().subtract(const Duration(days: 365)),
+                lastDate: DateTime.now().add(const Duration(days: 365)),
+                initialDate: task.dateTime,
+              );
+              if (selectDate != null) {
+                task.dateTime = selectDate;
+              }
+            },
+            child: Text(
+              dateFormat.format(task.dateTime),
+              style: theme.textTheme.labelSmall,
+              textAlign: TextAlign.center,
+            ),
+          ), */
+          

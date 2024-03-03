@@ -19,5 +19,8 @@
     "taskAddedSuccessfully":"تمت الإضافة بنجاح..",
     "taskAdderror":"لم يتم الاضافة اعد المحاولة!",
     "taskAupdatedSuccessfully":"تم التعديل بنجاح",
-    "errorTaskEdit":"حدث حطأ حاول مرة اخرى!"
+    "errorTaskEdit":"حدث حطأ حاول مرة اخرى!",
+    "edit":"تعديل",
+    "taskDeleted":"تم حذف المهمة",
+    "undo":"إلغاء"
 }

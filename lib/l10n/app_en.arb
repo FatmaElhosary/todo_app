@@ -17,8 +17,11 @@
     "saveChanges":"Save Changes",
     "done":"Done !",
     "taskAddedSuccessfully":"Task Added successfully",
-    "taskAdderror":"لم يتم الاضافة اعد المحاولة!",
-    "taskAupdatedSuccessfully":"تم التعديل بنجاح",
-    "errorTaskEdit":"حدث حطأ حاول مرة اخرى!"
+    "taskAdderror":"Task added successfully",
+    "taskAupdatedSuccessfully":"Task updated successfullyح",
+    "errorTaskEdit":"Error.. try again",
+    "edit":"Edit",
+    "taskDeleted":"Task Deleted Successfully",
+    "undo":"Undo"
    
 }
