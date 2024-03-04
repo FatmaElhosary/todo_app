@@ -17,6 +17,8 @@ void main() async {
   ]);
   await Firebase.initializeApp();
   await FirebaseFirestore.instance.disableNetwork();
+  FirebaseFirestore.instance.settings =
+      const Settings(cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED);
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
       create: (context) => SettingsProvider()..initalizeSettings(),

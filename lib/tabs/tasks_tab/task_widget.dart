@@ -39,11 +39,23 @@ class _TaskWidgetState extends State<TaskWidget> {
           children: [
             // A SlidableAction can have an icon and/or a label.
             SlidableAction(
-              onPressed: deleteTask(context),
+              onPressed: (_) {
+                FirebaseUtils.deleteTaskFromFirestore(widget.task.id)
+                    .timeout(const Duration(microseconds: 500), onTimeout: () {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(getSnackbar(local.taskDeleted));
+                  Provider.of<TasksProvider>(context, listen: false)
+                      .getTasksBySelectedDate();
+                }).catchError((onError) => {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(getSnackbar(local.errorTaskEdit))
+                        });
+              },
               backgroundColor: theme.colorScheme.onErrorContainer,
               foregroundColor: theme.colorScheme.onBackground,
               icon: Icons.delete,
               label: 'Delete',
+              borderRadius: BorderRadius.circular(15),
             ),
             SlidableAction(
               onPressed: (context) {
@@ -56,6 +68,7 @@ class _TaskWidgetState extends State<TaskWidget> {
               foregroundColor: theme.colorScheme.onBackground,
               icon: Icons.edit,
               label: 'Edit',
+              borderRadius: BorderRadius.circular(15),
             ),
           ],
         ),
@@ -102,6 +115,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                   toggleIsdone();
                 },
                 child: Container(
+                  margin: const EdgeInsetsDirectional.only(start: 8),
                   width: 69,
                   height: 34,
                   decoration: BoxDecoration(
@@ -140,14 +154,14 @@ class _TaskWidgetState extends State<TaskWidget> {
     setState(() {});
   }
 
-  deleteTask(BuildContext context) {
+/*  deleteTask(_) {
     FirebaseUtils.deleteTaskFromFirestore(widget.task.id)
         .timeout(const Duration(microseconds: 500), onTimeout: () {
       getSnackbar('Task Deletet Successfully');
       Provider.of<TasksProvider>(context, listen: false)
           .getTasksBySelectedDate();
     }).catchError((onError) => {getSnackbar(local.errorTaskEdit)});
-  }
+  }  */
 }
 /*   TextButton(
                   style: TextButton.styleFrom(

@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "635224583747",
-    "project_id": "tough-ivy-98523",
-    "storage_bucket": "tough-ivy-98523.appspot.com"
+    "project_number": "774041303172",
+    "project_id": "todo-1379e",
+    "storage_bucket": "todo-1379e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:635224583747:android:120ab25f041b2de9352ef6",
+        "mobilesdk_app_id": "1:774041303172:android:57ac0f4eb35a596987aad1",
         "android_client_info": {
           "package_name": "com.example.todo_app"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBXuatj38-mGEPKxMTdogBbt_VW5LMcHi4"
+          "current_key": "AIzaSyCb0z96O-EZ5fqWgeF5VmiN_wJIn7jaPJA"
         }
       ],
       "services": {
