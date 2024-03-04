@@ -40,8 +40,6 @@ class AppTheme {
           fontWeight: FontWeight.w400,
           color: Color(0xFF5D9CEC)),
     ),
-    // bottomSheetTheme: BottomSheetThemeData(backgroundColor: )
-
     snackBarTheme: const SnackBarThemeData(
       insetPadding: EdgeInsets.zero,
       backgroundColor: Color(0xFF5D9CEC),
