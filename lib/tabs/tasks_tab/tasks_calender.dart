@@ -20,6 +20,7 @@ class _TasksCalenderState extends State<TasksCalender> {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final tasksProvider = Provider.of<TasksProvider>(context);
+
     return TimelineCalendar(
       calendarType: CalendarType.GREGORIAN,
       calendarLanguage: "en",
@@ -53,11 +54,13 @@ class _TasksCalenderState extends State<TasksCalender> {
       onDateTimeReset: changeDatePicker,
       onMonthChanged: changeDatePicker,
       onYearChanged: changeDatePicker,
+      onChangeViewType: changeDatePicker,
     );
   }
 
   changeDatePicker(calendarDatetime) {
     Provider.of<TasksProvider>(context, listen: false)
         .changeSelectedDate(calendarDatetime.toDateTime());
+        
   }
 }

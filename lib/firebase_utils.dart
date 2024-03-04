@@ -16,13 +16,21 @@ class FirebaseUtils {
     return doc.set(task);
   }
 
-  static Future<List<Task>> getAllTasksFromFirestore() async {
+  static Future<List<Task>> getTasksByDateFromFirestore(
+      Timestamp startDay, Timestamp endDay) async {
     final CollectionReference<Task> tasksCollection = getTasksCollection();
-    final QuerySnapshot<Task> querySnapShot = await tasksCollection.get();
+    final QuerySnapshot<Task> querySnapShot = await tasksCollection
+        .where('dateTime', isGreaterThanOrEqualTo: startDay)
+        .where('dateTime', isLessThanOrEqualTo: endDay)
+        .orderBy('dateTime')
+        .get();
     return querySnapShot.docs.map((snapShot) => snapShot.data()).toList();
   }
 
-  static void deleteTaskFromFirestore(String taskid) {}
+  static Future<void> deleteTaskFromFirestore(String taskid) {
+    final CollectionReference<Task> tasksCollection = getTasksCollection();
+    return tasksCollection.doc(taskid).delete();
+  }
 
   static Future<void> editTaskInFireStore(Task task) async {
     final CollectionReference<Task> tasksCollection = getTasksCollection();

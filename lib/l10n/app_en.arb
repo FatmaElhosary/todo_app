@@ -15,6 +15,13 @@
     "selectDate":"Select Date",
     "editTask":"Edit Task",
     "saveChanges":"Save Changes",
-    "done":"Done !"
+    "done":"Done !",
+    "taskAddedSuccessfully":"Task Added successfully",
+    "taskAdderror":"Task added successfully",
+    "taskAupdatedSuccessfully":"Task updated successfully",
+    "errorTaskEdit":"Error.. try again",
+    "edit":"Edit",
+    "taskDeleted":"Task Deleted Successfully",
+    "undo":"Undo"
    
 }

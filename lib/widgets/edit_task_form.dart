@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter_timeline_calendar/timeline/utils/datetime_extension.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/firebase_utils.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/providers/tasks_provider.dart';
+import 'package:todo_app/shared/shared.dart';
+import 'package:todo_app/widgets/date_picker_field.dart';
 import 'package:todo_app/widgets/elaveted_btn.dart';
 import 'package:todo_app/widgets/text_form_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -26,6 +26,7 @@ class _EditFormState extends State<EditForm> {
   late Task task;
   late DateTime selectedDate;
   final formKey = GlobalKey<FormState>();
+  late AppLocalizations appLocal;
   @override
   void initState() {
     super.initState();
@@ -49,9 +50,8 @@ class _EditFormState extends State<EditForm> {
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations appLocal = AppLocalizations.of(context)!;
+    appLocal = AppLocalizations.of(context)!;
     final ThemeData theme = Theme.of(context);
-
     task = ModalRoute.of(context)!.settings.arguments as Task;
     return Form(
       key: formKey,
@@ -95,30 +95,12 @@ class _EditFormState extends State<EditForm> {
                   fontSize: 20, color: theme.colorScheme.onPrimaryContainer),
             ),
           ),
-          InkWell(
-            onTap: () async {
-              final selectDate = await showDatePicker(
-                context: context,
-                firstDate: DateTime.now().subtract(const Duration(days: 365)),
-                lastDate: DateTime.now().add(const Duration(days: 365)),
-                initialDate: task.dateTime,
-              );
-              if (selectDate != null) {
-                task.dateTime = selectDate;
-              }
-            },
-            child: Text(
-              dateFormat.format(task.dateTime),
-              style: theme.textTheme.labelSmall,
-              textAlign: TextAlign.center,
-            ),
+          DatePickerWidget(
+            initialDateTime: task.dateTime,
+            setTaskDate: (dateTime) => task.dateTime = dateTime,
           ),
-
-          /*   DatePickerWidget(
-            dateTime: task.dateTime,
-          ), */
           const SizedBox(
-            height: 33,
+            height: 50,
           ),
           GlobalButton(
             text: appLocal.saveChanges,
@@ -137,15 +119,17 @@ class _EditFormState extends State<EditForm> {
     if (formKey.currentState!.validate()) {
       task.title = taskController.text;
       task.description = descriptionController.text;
-      /*  task.dateTime = selectedDate; */
       FirebaseUtils.editTaskInFireStore(task)
           .timeout(const Duration(milliseconds: 500), onTimeout: () {
         debugPrint('success');
-        debugPrint('sssssssssss:${task.title}');
+        ScaffoldMessenger.of(context)
+            .showSnackBar(getSnackbar(appLocal.taskAupdatedSuccessfully));
         Provider.of<TasksProvider>(context, listen: false)
             .changeSelectedDate(task.dateTime);
         Navigator.pop(context);
       }).catchError((onError) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(getSnackbar(appLocal.errorTaskEdit));
         debugPrint(onError);
       });
 
@@ -153,3 +137,22 @@ class _EditFormState extends State<EditForm> {
     }
   }
 }
+ /*   InkWell(
+            onTap: () async {
+              final selectDate = await showDatePicker(
+                context: context,
+                firstDate: DateTime.now().subtract(const Duration(days: 365)),
+                lastDate: DateTime.now().add(const Duration(days: 365)),
+                initialDate: task.dateTime,
+              );
+              if (selectDate != null) {
+                task.dateTime = selectDate;
+              }
+            },
+            child: Text(
+              dateFormat.format(task.dateTime),
+              style: theme.textTheme.labelSmall,
+              textAlign: TextAlign.center,
+            ),
+          ), */
+          
