@@ -20,12 +20,13 @@ class AddTask extends StatefulWidget {
 class _AddTaskState extends State<AddTask> {
   //final DateFormat dateFormat = DateFormat("dd/MM/yyyy");
   late AppLocalizations localLang;
-  DateTime selectedDate = DateTime.now();
+  late DateTime selectedDate;
   final taskController = TextEditingController();
   final descriptionController = TextEditingController();
 
   @override
   void initState() {
+    selectedDate = DateTime.now();
     super.initState();
   }
 

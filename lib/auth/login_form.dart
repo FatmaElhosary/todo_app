@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/screens/home_screen.dart';
 import 'package:todo_app/widgets/elaveted_btn.dart';
 import 'package:todo_app/widgets/text_form_field.dart';
 
@@ -47,5 +48,7 @@ class _LoginFormState extends State<LoginForm> {
     ));
   }
 
-  void login() {}
+  void login() {
+    Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+  }
 }

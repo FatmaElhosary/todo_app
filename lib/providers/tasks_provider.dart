@@ -4,13 +4,13 @@ import 'package:todo_app/firebase_utils.dart';
 import 'package:todo_app/models/task.dart';
 
 class TasksProvider with ChangeNotifier {
-  late List<Task> tasks;
-  late DateTime selectedDate;
-  TasksProvider() {
+  List<Task> tasks = [];
+  DateTime selectedDate = DateTime.now();
+  /*  TasksProvider() {
     selectedDate = DateTime.now();
     tasks = [];
     getTasksBySelectedDate();
-  }
+  } */
   DateTime get currentDate => selectedDate;
   List<Task> get currentChoosenDateTasks => tasks;
   Future<void> getTasksBySelectedDate() async {
