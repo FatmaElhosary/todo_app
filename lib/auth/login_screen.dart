@@ -3,6 +3,7 @@ import 'package:todo_app/auth/login_form.dart';
 import 'package:todo_app/auth/register_screen.dart';
 import 'package:todo_app/widgets/text_button.dart';
 import 'package:todo_app/widgets/title_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends StatelessWidget {
   static const routeName = '/login';
@@ -10,10 +11,11 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text('Login'),
+        title: Text(local.login),
         centerTitle: true,
         titleTextStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
               color: Theme.of(context).colorScheme.primaryContainer,
@@ -38,12 +40,12 @@ class LoginScreen extends StatelessWidget {
             const Spacer(
               flex: 2,
             ),
-            const TitleWidget(
-              text: 'Welcome back !',
+            TitleWidget(
+              text: local.welcomeback,
             ),
             const LoginForm(),
             GlobalTextButton(
-              text: 'Or Create My Account',
+              text: local.createAccount,
               onPressed: () => Navigator.pushReplacementNamed(
                   context, RegisterScreen.routeName),
             ),

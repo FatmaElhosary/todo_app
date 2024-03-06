@@ -26,7 +26,7 @@ void main() async {
       create: (context) => SettingsProvider()..initalizeSettings(),
     ),
     ChangeNotifierProvider(
-      create: (context) => TasksProvider()..getTasksBySelectedDate(),
+      create: (context) => TasksProvider(),
     ),
   ], child: const TodoApp()));
 }

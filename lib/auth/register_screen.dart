@@ -2,23 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/auth/login_screen.dart';
 import 'package:todo_app/auth/register_form.dart';
 import 'package:todo_app/widgets/text_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
   static const routeName = '/register';
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text('Create Account'),
+        title: Text(local.register),
         centerTitle: true,
         titleTextStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
               color: Theme.of(context).colorScheme.primaryContainer,
             ),
         backgroundColor: Colors.transparent,
         toolbarHeight: 120,
-        
       ),
       extendBodyBehindAppBar: true,
       body: Container(
@@ -39,7 +40,7 @@ class RegisterScreen extends StatelessWidget {
             ),
             const RegisterForm(),
             GlobalTextButton(
-              text: 'Already have an account',
+              text: local.alreadyHaveAccount,
               onPressed: () => Navigator.pushReplacementNamed(
                   context, LoginScreen.routeName),
             ),

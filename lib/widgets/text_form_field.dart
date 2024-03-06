@@ -39,6 +39,7 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
       maxLines: widget.maxLines,
       obscureText: isObsucure,
       decoration: InputDecoration(
+          suffixIconColor: Theme.of(context).colorScheme.primary,
           hintText: widget.hint,
           label: widget.labelText != null ? Text(widget.labelText!) : null,
           hintStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
@@ -54,8 +55,12 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
                     setState(() {});
                   },
                   icon: isObsucure
-                      ? const Icon(Icons.visibility_off_outlined)
-                      : const Icon(Icons.visibility_outlined))
+                      ? const Icon(
+                          Icons.visibility_off_outlined,
+                        )
+                      : const Icon(
+                          Icons.visibility_outlined,
+                        ))
               : null),
     );
   }

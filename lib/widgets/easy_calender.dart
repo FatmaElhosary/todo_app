@@ -33,7 +33,7 @@ class _EasyCalenderState extends State<EasyCalender> {
         EasyInfiniteDateTimeLine(
           controller: _controller,
           firstDate: DateTime.now().subtract(const Duration(days: 365)),
-          focusDate: provider.currentDate,
+          focusDate: provider.selectedDate,
           lastDate: DateTime.now().add(const Duration(days: 365)),
           headerBuilder: (context, date) {
             return Row(
@@ -47,8 +47,9 @@ class _EasyCalenderState extends State<EasyCalender> {
                 ),
                 IconButton(
                     onPressed: () {
-                       provider.changeSelectedDate(DateTime.now());
+                      provider.changeSelectedDate(DateTime.now());
                       _controller.animateToDate(provider.currentDate);
+                      //_controller.animateToFocusDate();
                     },
                     icon: Icon(
                       Icons.restart_alt_rounded,
@@ -91,6 +92,7 @@ class _EasyCalenderState extends State<EasyCalender> {
           ),
           showTimelineHeader: true,
           onDateChange: (selectedDate) {
+            print('picker $selectedDate');
             provider.changeSelectedDate(selectedDate);
           },
         ),
