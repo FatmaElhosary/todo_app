@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:todo_app/shared/shared.dart';
 
 class DatePickerWidget extends StatefulWidget {
   final DateTime initialDateTime;
   final void Function(DateTime) setTaskDate;
-  final DateFormat dateFormat = DateFormat("dd/MM/yyyy");
-  DatePickerWidget(
+
+  const DatePickerWidget(
       {super.key, required this.initialDateTime, required this.setTaskDate});
 
   @override
@@ -33,6 +33,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
         ).then((date) {
           if (date != null) {
             setState(() {
+              print('date $date');
               widget.setTaskDate(date);
               selectedDate = date;
             });
@@ -40,7 +41,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
         });
       },
       child: Text(
-        widget.dateFormat.format(selectedDate),
+        dateFormat.format(selectedDate),
         style: theme.textTheme.labelSmall,
         textAlign: TextAlign.center,
       ),

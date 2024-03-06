@@ -32,6 +32,7 @@ class _TaskWidgetState extends State<TaskWidget> {
         start: 20,
       ),
       child: Slidable(
+        closeOnScroll: true,
         key: const ValueKey(0),
         startActionPane: ActionPane(
           // A motion is a widget used to control how the pane animates.

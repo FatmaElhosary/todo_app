@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/tabs/tasks_tab/task_widget.dart';
-import 'package:todo_app/tabs/tasks_tab/tasks_calender.dart';
 import 'package:todo_app/providers/tasks_provider.dart';
+import 'package:todo_app/widgets/easy_calender.dart';
 
 class TasksHome extends StatefulWidget {
   const TasksHome({super.key});
@@ -18,7 +18,7 @@ class _TasksHomeState extends State<TasksHome> {
 
     return Column(
       children: [
-        const TasksCalender(),
+        const EasyCalender(),
         Expanded(
             child: ListView.builder(
           padding: const EdgeInsets.symmetric(vertical: 15),

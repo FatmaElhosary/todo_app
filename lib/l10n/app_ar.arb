@@ -22,5 +22,19 @@
     "errorTaskEdit":"حدث حطأ حاول مرة اخرى!",
     "edit":"تعديل",
     "taskDeleted":"تم حذف المهمة",
-    "undo":"إلغاء"
+    "undo":"إلغاء",
+    "emailEmpty":"من فضلك ادخل البريد الإلكترونى",
+    "emailNotValid":"البريد الاإلكترونى غير صحيح",
+     "passwordEmpty":"من فضلك أدخل الرقم السرى",
+     "passwordLength":"الرقم السرى يتكون من ستة حروف على الأقل",
+     "nameEmpty":"أدخل الاسم الأول",
+     "createAccount":"إنشاء حساب جديد",
+     "alreadyHaveAccount":"لديك حساب بالفعل",
+     "login":"تسجيل دخول",
+     "register":"إنشاء حساب",
+     "email":"البريد الإلكترونى",
+     "passwowrd":"كلمة المرور",
+     "name":"الاسم الأول",
+     "welcomeback":"مرحبا مجددا !"
+ 
 }

@@ -32,7 +32,11 @@ class AppTheme {
             fontSize: 14,
             fontFamily: 'Inter',
             fontWeight: FontWeight.w400,
-            color: Color(0xFF5D9CEC))),
+            color: Color(0xFF5D9CEC)),
+        headlineSmall: TextStyle(
+            color: Color(0xFF363636),
+            fontSize: 15,
+            fontWeight: FontWeight.bold)),
     dropdownMenuTheme: const DropdownMenuThemeData(
       textStyle: TextStyle(
           fontSize: 14,
@@ -40,8 +44,6 @@ class AppTheme {
           fontWeight: FontWeight.w400,
           color: Color(0xFF5D9CEC)),
     ),
-    // bottomSheetTheme: BottomSheetThemeData(backgroundColor: )
-
     snackBarTheme: const SnackBarThemeData(
       insetPadding: EdgeInsets.zero,
       backgroundColor: Color(0xFF5D9CEC),
@@ -85,6 +87,8 @@ class AppTheme {
           fontFamily: 'Inter',
           fontWeight: FontWeight.w400,
           color: Color(0xFF5D9CEC)),
+      headlineSmall: TextStyle(
+          color: Color(0xFFFFFFFF), fontSize: 15, fontWeight: FontWeight.bold),
     ),
     snackBarTheme: const SnackBarThemeData(
       insetPadding: EdgeInsets.zero,

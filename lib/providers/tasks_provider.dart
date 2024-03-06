@@ -16,14 +16,14 @@ class TasksProvider with ChangeNotifier {
   Future<void> getTasksBySelectedDate() async {
     // DateTime tasksDate = date ?? currentDate;
     //set start date
-    final DateTime startday =
-        currentDate.copyWith(hour: 0, minute: 0, second: 0);
-// Set up end date
-    final DateTime endday =
-        currentDate.copyWith(hour: 23, minute: 59, second: 59);
-    tasks = await FirebaseUtils.getTasksByDateFromFirestore(
-        Timestamp.fromDate(startday), Timestamp.fromDate(endday));
+    final DateTime startOfDay =
+        DateTime(currentDate.year, currentDate.month, currentDate.day);
 
+// Set up end date
+    final DateTime endOfDay = startOfDay.add(const Duration(days: 1));
+    tasks = await FirebaseUtils.getTasksByDateFromFirestore(
+        Timestamp.fromDate(startOfDay), Timestamp.fromDate(endOfDay));
+    print(tasks);
     notifyListeners();
   }
 
@@ -40,3 +40,6 @@ class TasksProvider with ChangeNotifier {
             task.dateTime.year == selectedDate.year)
         .toList(); */
     //tasks.sort((task, nextTask) => task.dateTime.compareTo(nextTask.dateTime));
+
+        /*  currentDate.copyWith(
+        hour: 0, minute: 0, second: 0, millisecond: 0, microsecond: 0); */

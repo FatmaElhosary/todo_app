@@ -18,12 +18,11 @@ class AddTask extends StatefulWidget {
 }
 
 class _AddTaskState extends State<AddTask> {
-  //final DateFormat dateFormat = DateFormat("dd/MM/yyyy");
   late AppLocalizations localLang;
   DateTime selectedDate = DateTime.now();
   final taskController = TextEditingController();
   final descriptionController = TextEditingController();
-
+  final formKey = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
@@ -41,100 +40,94 @@ class _AddTaskState extends State<AddTask> {
     localLang = AppLocalizations.of(context)!;
     ThemeData theme = Theme.of(context);
 
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      // mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        TitleWidget(
-          text: localLang.newTask,
-        ),
-        const SizedBox(
-          height: 33,
-        ),
-        GlobalTextField(
-          controller: taskController,
-          hint: localLang.enterTask,
-          maxLines: 2,
-        ),
-        const SizedBox(
-          height: 33,
-        ),
-        GlobalTextField(
-          controller: descriptionController,
-          hint: localLang.enterTaskDetails,
-          maxLines: 5,
-        ),
-        const SizedBox(
-          height: 33,
-        ),
-        Align(
-          alignment: AlignmentDirectional.centerStart,
-          child: Text(
-            localLang.selectDate,
-            style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                fontSize: 20, color: theme.colorScheme.onPrimaryContainer),
+    return Form(
+      key: formKey,
+      child: ListView(
+        padding: const EdgeInsets.all(16),
+        children: <Widget>[
+          TitleWidget(
+            text: localLang.newTask,
           ),
-        ),
-        /*    InkWell(
-          onTap: () async {
-            final selectDate = await showDatePicker(
-              context: context,
-              firstDate: DateTime.now(),
-              lastDate: DateTime.now().add(const Duration(days: 365)),
-              initialDate: selectedDate,
-            );
-            if (selectDate != null) {
-              setState(() {
-                selectedDate = selectDate;
-              });
-            }
-          },
-          child: Text(
-            dateFormat.format(selectedDate),
-            style: theme.textTheme.labelSmall,
-            textAlign: TextAlign.center,
+          const SizedBox(
+            height: 33,
           ),
-        ),
-       
-        */
+          GlobalTextField(
+            controller: taskController,
+            hint: localLang.enterTask,
+            maxLines: 2,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return localLang.enterTask;
+              }
+              return null;
+            },
+          ),
+          const SizedBox(
+            height: 33,
+          ),
+          GlobalTextField(
+            controller: descriptionController,
+            hint: localLang.enterTaskDetails,
+            maxLines: 5,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return localLang.enterTaskDetails;
+              }
+              return null;
+            },
+          ),
+          const SizedBox(
+            height: 33,
+          ),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              localLang.selectDate,
+              style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                  fontSize: 20, color: theme.colorScheme.onPrimaryContainer),
+            ),
+          ),
 
-        DatePickerWidget(
-          initialDateTime: selectedDate,
-          setTaskDate: (dateTime) => selectedDate = dateTime,
-        ),
-        const SizedBox(
-          height: 33,
-        ),
+          DatePickerWidget(
+            initialDateTime: selectedDate,
+            setTaskDate: (dateTime) => selectedDate = dateTime,
+          ),
+          const SizedBox(
+            height: 33,
+          ),
 
-        GlobalButton(
-          text: localLang.add,
-          onPressed: addTask,
-        ),
-        //////////////////////////////////
-        ///
-      ],
+          GlobalButton(
+            text: localLang.add,
+            onPressed: addTask,
+          ),
+          //////////////////////////////////
+          ///
+        ],
+      ),
     );
   }
 
   void addTask() {
-    // print('add');
-    FirebaseUtils.addTaskToFirestore(Task(
-            title: taskController.text.trim(),
-            description: descriptionController.text.trim(),
-            dateTime: selectedDate))
-        .timeout(const Duration(milliseconds: 500), onTimeout: () {
-      //get SnackBar/////////////////
-      ScaffoldMessenger.of(context)
-          .showSnackBar(getSnackbar(localLang.taskAddedSuccessfully));
-      ////refresh tasks//////////////////
-      Provider.of<TasksProvider>(context, listen: false)
-          .getTasksBySelectedDate();
-      /////close eddit bottomsheet////////
-      Navigator.pop(context);
-    }).catchError((onError) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(getSnackbar(localLang.taskAdderror));
-      Navigator.pop(context);
-    });
+    if (formKey.currentState!.validate()) {
+      FirebaseUtils.addTaskToFirestore(Task(
+              title: taskController.text.trim(),
+              description: descriptionController.text.trim(),
+              dateTime: selectedDate))
+          .timeout(const Duration(milliseconds: 500), onTimeout: () {
+        //get SnackBar/////////////////
+        ScaffoldMessenger.of(context)
+            .showSnackBar(getSnackbar(localLang.taskAddedSuccessfully));
+        print(selectedDate);
+        ////refresh tasks//////////////////
+        Provider.of<TasksProvider>(context, listen: false)
+            .getTasksBySelectedDate();
+        /////close eddit bottomsheet////////
+        Navigator.pop(context);
+      }).catchError((onError) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(getSnackbar(localLang.taskAdderror));
+        Navigator.pop(context);
+      });
+    }
   }
 }

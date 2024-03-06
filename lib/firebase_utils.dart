@@ -22,7 +22,7 @@ class FirebaseUtils {
     final QuerySnapshot<Task> querySnapShot = await tasksCollection
         .where('dateTime', isGreaterThanOrEqualTo: startDay)
         .where('dateTime', isLessThanOrEqualTo: endDay)
-        .orderBy('dateTime')
+        .orderBy('dateTime', descending: true)
         .get();
     return querySnapShot.docs.map((snapShot) => snapShot.data()).toList();
   }

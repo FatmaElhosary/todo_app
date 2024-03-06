@@ -5,7 +5,7 @@ import 'package:todo_app/tabs/settings_tab/settings_tab.dart';
 import 'package:todo_app/tabs/tasks_tab/tasks_home.dart';
 
 class HomeScreen extends StatefulWidget {
-  static const routeName = '/';
+  static const routeName = '/home';
   const HomeScreen({super.key});
 
   @override
@@ -48,6 +48,18 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: theme.colorScheme.primary,
         elevation: 0,
         toolbarHeight: MediaQuery.of(context).size.height * .15,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.logout,
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  size: 32,
+                )),
+          )
+        ],
       ),
       body: currentPageIndex == 0 ? const TasksHome() : const SettingsTab(),
       bottomNavigationBar: NavigationBarTheme(
