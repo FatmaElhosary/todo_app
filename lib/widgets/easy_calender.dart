@@ -94,6 +94,7 @@ class _EasyCalenderState extends State<EasyCalender> {
           onDateChange: (selectedDate) {
             print('picker $selectedDate');
             provider.changeSelectedDate(selectedDate);
+            _controller.animateToDate(provider.currentDate);
           },
         ),
 

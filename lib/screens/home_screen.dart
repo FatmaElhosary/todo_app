@@ -48,18 +48,6 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: theme.colorScheme.primary,
         elevation: 0,
         toolbarHeight: MediaQuery.of(context).size.height * .15,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.logout,
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  size: 32,
-                )),
-          )
-        ],
       ),
       body: currentPageIndex == 0 ? const TasksHome() : const SettingsTab(),
       bottomNavigationBar: NavigationBarTheme(

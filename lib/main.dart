@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/app_theme.dart';
-import 'package:todo_app/auth/login_screen.dart';
-import 'package:todo_app/auth/register_screen.dart';
 import 'package:todo_app/providers/settings_provider.dart';
 import 'package:todo_app/screens/edit_task.dart';
 import 'package:todo_app/screens/home_screen.dart';
@@ -48,10 +46,9 @@ class TodoApp extends StatelessWidget {
         routes: {
           HomeScreen.routeName: (_) => const HomeScreen(),
           EditTask.routName: (context) => const EditTask(),
-          LoginScreen.routeName: (_) => const LoginScreen(),
-          RegisterScreen.routeName: (_) => const RegisterScreen(),
+        
         },
-        initialRoute: LoginScreen.routeName,
+        initialRoute: HomeScreen.routeName,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         locale: Locale(provier.appLanguage),
