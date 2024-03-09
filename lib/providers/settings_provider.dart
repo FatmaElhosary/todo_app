@@ -11,14 +11,14 @@ class SettingsProvider with ChangeNotifier {
   void changeAppTheme(ThemeMode mode) {
     if (currentMode == mode) return;
     currentMode = mode;
-    setSettingToPref();
+    setThemeToPref();
     notifyListeners();
   }
 
   void changeLanguage(String languageCode) {
     if (selectedlanguageCode == languageCode) return;
     selectedlanguageCode = languageCode;
-    setSettingToPref();
+    setThemeToPref();
     notifyListeners();
   }
 
@@ -35,7 +35,7 @@ class SettingsProvider with ChangeNotifier {
   }
 
 ///////set SharedPreferences data///////////
-  void setSettingToPref() async {
+  void setThemeToPref() async {
     final SharedPreferences prefs = await _prefs;
     String theme = appTheme == ThemeMode.light
         ? 'light'
@@ -43,6 +43,10 @@ class SettingsProvider with ChangeNotifier {
             ? 'dark'
             : 'system';
     prefs.setString('theme', theme);
+  }
+
+  void setLanguageToPref() async {
+    final SharedPreferences prefs = await _prefs;
     prefs.setString('language', appLanguage);
   }
 }

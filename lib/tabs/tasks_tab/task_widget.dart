@@ -1,7 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/app_theme.dart';
-import 'package:todo_app/firebase_utils.dart';
+import 'package:todo_app/network/firebase_task_utils.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/providers/tasks_provider.dart';
 import 'package:todo_app/screens/edit_task.dart';
@@ -22,6 +23,7 @@ class _TaskWidgetState extends State<TaskWidget> {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+    final userId =  FirebaseAuth.instance.currentUser!.uid;
     local = AppLocalizations.of(context)!;
 
     return Container(
@@ -41,16 +43,20 @@ class _TaskWidgetState extends State<TaskWidget> {
             // A SlidableAction can have an icon and/or a label.
             SlidableAction(
               onPressed: (_) {
-                FirebaseUtils.deleteTaskFromFirestore(widget.task.id)
-                    .timeout(const Duration(microseconds: 500), onTimeout: () {
+                FirebaseUtils.deleteTaskFromFirestore(
+                        FirebaseAuth.instance.currentUser!.uid,
+                        widget.task.id)
+                    .then((_) {
+                  ///update ui///
+                  Provider.of<TasksProvider>(context, listen: false)
+                      .getTasksBySelectedDate(userId);
+                  //////
                   ScaffoldMessenger.of(context)
                       .showSnackBar(getSnackbar(local.taskDeleted));
-                  Provider.of<TasksProvider>(context, listen: false)
-                      .getTasksBySelectedDate();
-                }).catchError((onError) => {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(getSnackbar(local.errorTaskEdit))
-                        });
+                }).catchError((onError) {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(getSnackbar(local.errorTaskEdit));
+                });
               },
               backgroundColor: theme.colorScheme.onErrorContainer,
               foregroundColor: theme.colorScheme.onBackground,
@@ -148,39 +154,14 @@ class _TaskWidgetState extends State<TaskWidget> {
 
   void toggleIsdone() {
     widget.task.isDone = !widget.task.isDone;
-    FirebaseUtils.editTaskInFireStore(widget.task)
-        .timeout(const Duration(microseconds: 500), onTimeout: () {
-      print('success');
-    }).catchError((onError) => print(onError));
+    FirebaseUtils.editTaskInFireStore(
+            FirebaseAuth.instance.currentUser!.uid, widget.task)
+        .then((_) {})
+        .catchError((onError) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(getSnackbar(local.errorTaskEdit));
+    });
+
     setState(() {});
   }
-
-/*  deleteTask(_) {
-    FirebaseUtils.deleteTaskFromFirestore(widget.task.id)
-        .timeout(const Duration(microseconds: 500), onTimeout: () {
-      getSnackbar('Task Deletet Successfully');
-      Provider.of<TasksProvider>(context, listen: false)
-          .getTasksBySelectedDate();
-    }).catchError((onError) => {getSnackbar(local.errorTaskEdit)});
-  }  */
 }
-/*   TextButton(
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    alignment: AlignmentDirectional.centerStart,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(
-                      EditTask.routName,
-                      arguments: widget.task,
-                    );
-                  },
-                  child: Text(widget.task.title,
-                      style: !isPressed
-                          ? theme.textTheme.titleSmall!.copyWith(
-                              color: theme.colorScheme.primary, fontSize: 18)
-                          : Theme.of(context).textTheme.titleSmall!.copyWith(
-                              color: AppTheme.greenColor, fontSize: 18)),
-                ),
-                 */
-                

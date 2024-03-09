@@ -1,9 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/app_theme.dart';
+import 'package:todo_app/auth/home_or_login.dart';
 import 'package:todo_app/auth/login_screen.dart';
 import 'package:todo_app/auth/register_screen.dart';
 import 'package:todo_app/providers/settings_provider.dart';
@@ -17,10 +17,12 @@ void main() async {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
-  await Firebase.initializeApp();
-  await FirebaseFirestore.instance.disableNetwork();
-  FirebaseFirestore.instance.settings =
-      const Settings(cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED);
+  await Firebase.initializeApp().then((value) {
+    debugPrint('firebase initialized');
+  }).catchError((err) {
+    debugPrint(err.toString());
+  });
+
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
       create: (context) => SettingsProvider()..initalizeSettings(),
@@ -28,6 +30,7 @@ void main() async {
     ChangeNotifierProvider(
       create: (context) => TasksProvider(),
     ),
+  
   ], child: const TodoApp()));
 }
 
@@ -37,25 +40,26 @@ class TodoApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Consumer<SettingsProvider>(
-        builder: (context, provier, Widget? child) {
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Todo Demo',
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        themeMode: provier.appTheme,
-        routes: {
-          HomeScreen.routeName: (_) => const HomeScreen(),
-          EditTask.routName: (context) => const EditTask(),
-          LoginScreen.routeName: (_) => const LoginScreen(),
-          RegisterScreen.routeName: (_) => const RegisterScreen(),
-        },
-        initialRoute: LoginScreen.routeName,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        locale: Locale(provier.appLanguage),
-      );
-    });
+    var provider = Provider.of<SettingsProvider>(
+      context,
+    );
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Todo Demo',
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: provider.appTheme,
+      routes: {
+        HomeOrLogin.routeName: (_) => const HomeOrLogin(),
+        HomeScreen.routeName: (_) => const HomeScreen(),
+        EditTask.routName: (context) => const EditTask(),
+        LoginScreen.routeName: (_) => const LoginScreen(),
+        RegisterScreen.routeName: (_) => const RegisterScreen(),
+      },
+      initialRoute: HomeOrLogin.routeName,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: Locale(provider.appLanguage),
+    );
   }
 }

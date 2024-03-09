@@ -7,6 +7,7 @@ SnackBar getSnackbar(String textContent, {SnackBarAction? snackBarAction}) {
     behavior: SnackBarBehavior.floating,
     content: Text(textContent),
     action: snackBarAction,
+   
   );
 }
 

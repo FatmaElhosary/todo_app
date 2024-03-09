@@ -1,9 +1,10 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/firebase_utils.dart';
+import 'package:todo_app/network/firebase_task_utils.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/providers/tasks_provider.dart';
 import 'package:todo_app/shared/shared.dart';
@@ -119,13 +120,18 @@ class _EditFormState extends State<EditForm> {
     if (formKey.currentState!.validate()) {
       task.title = taskController.text;
       task.description = descriptionController.text;
-      FirebaseUtils.editTaskInFireStore(task)
-          .timeout(const Duration(milliseconds: 500), onTimeout: () {
+      FirebaseUtils.editTaskInFireStore(
+              FirebaseAuth.instance.currentUser!.uid,
+              task)
+          .then((_) {
         debugPrint('success');
-        ScaffoldMessenger.of(context)
-            .showSnackBar(getSnackbar(appLocal.taskAupdatedSuccessfully));
-        Provider.of<TasksProvider>(context, listen: false)
-            .changeSelectedDate(task.dateTime);
+     
+        Provider.of<TasksProvider>(context, listen: false).changeSelectedDate(
+             FirebaseAuth.instance.currentUser!.uid,
+            task.dateTime);
+               ScaffoldMessenger.of(context).showSnackBar(
+          getSnackbar(appLocal.taskAupdatedSuccessfully),
+        );
         Navigator.pop(context);
       }).catchError((onError) {
         ScaffoldMessenger.of(context)
@@ -137,22 +143,3 @@ class _EditFormState extends State<EditForm> {
     }
   }
 }
- /*   InkWell(
-            onTap: () async {
-              final selectDate = await showDatePicker(
-                context: context,
-                firstDate: DateTime.now().subtract(const Duration(days: 365)),
-                lastDate: DateTime.now().add(const Duration(days: 365)),
-                initialDate: task.dateTime,
-              );
-              if (selectDate != null) {
-                task.dateTime = selectDate;
-              }
-            },
-            child: Text(
-              dateFormat.format(task.dateTime),
-              style: theme.textTheme.labelSmall,
-              textAlign: TextAlign.center,
-            ),
-          ), */
-          

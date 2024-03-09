@@ -6,7 +6,7 @@ import 'package:todo_app/widgets/title_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends StatelessWidget {
-  static const routeName = '/login';
+  static const routeName = 'login';
   const LoginScreen({super.key});
 
   @override
