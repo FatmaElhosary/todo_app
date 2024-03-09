@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/auth/login_screen.dart';
+import 'package:todo_app/network/firebase_auth.dart';
+import 'package:todo_app/providers/tasks_provider.dart';
 import 'package:todo_app/screens/add_task.dart';
 import 'package:todo_app/tabs/settings_tab/settings_tab.dart';
 import 'package:todo_app/tabs/tasks_tab/tasks_home.dart';
 
 class HomeScreen extends StatefulWidget {
-  static const routeName = '/home';
+  static const routeName = 'home';
   const HomeScreen({super.key});
 
   @override
@@ -16,14 +20,14 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentPageIndex = 0;
   @override
   void initState() {
-    currentPageIndex = 0;
+    // currentPageIndex = 0;
     super.initState();
   }
-/* 
+
   final List<Widget> destinationWidgets = [
     const TasksHome(),
     const SettingsTab()
-  ]; */
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +56,12 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.all(16),
             child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Auth.logout();
+                  Navigator.pushReplacementNamed(
+                      context, LoginScreen.routeName);
+                  Provider.of<TasksProvider>(context, listen: false).clear();
+                },
                 icon: Icon(
                   Icons.logout,
                   color: Theme.of(context).colorScheme.primaryContainer,
@@ -61,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      body: currentPageIndex == 0 ? const TasksHome() : const SettingsTab(),
+      body: destinationWidgets[currentPageIndex],
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
           backgroundColor: theme.colorScheme.primaryContainer,

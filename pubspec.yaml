@@ -23,6 +23,7 @@ dependencies:
   firebase_core: ^2.25.5
   flutter_slidable: ^3.0.1
   easy_date_timeline: ^1.0.3
+  firebase_auth: ^4.17.7
  
 
 dev_dependencies:

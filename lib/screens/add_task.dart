@@ -1,6 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/firebase_utils.dart';
+import 'package:todo_app/network/firebase_task_utils.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/providers/tasks_provider.dart';
 import 'package:todo_app/shared/shared.dart';
@@ -22,6 +23,7 @@ class _AddTaskState extends State<AddTask> {
   DateTime selectedDate = DateTime.now();
   final taskController = TextEditingController();
   final descriptionController = TextEditingController();
+
   final formKey = GlobalKey<FormState>();
   @override
   void initState() {
@@ -109,18 +111,22 @@ class _AddTaskState extends State<AddTask> {
 
   void addTask() {
     if (formKey.currentState!.validate()) {
-      FirebaseUtils.addTaskToFirestore(Task(
-              title: taskController.text.trim(),
-              description: descriptionController.text.trim(),
-              dateTime: selectedDate))
-          .timeout(const Duration(milliseconds: 500), onTimeout: () {
+      FirebaseUtils.addTaskToFirestore(
+              FirebaseAuth.instance.currentUser!.uid,
+              Task(
+                  title: taskController.text.trim(),
+                  description: descriptionController.text.trim(),
+                  dateTime: selectedDate))
+          .then((_) {
         //get SnackBar/////////////////
         ScaffoldMessenger.of(context)
             .showSnackBar(getSnackbar(localLang.taskAddedSuccessfully));
-        print(selectedDate);
+
         ////refresh tasks//////////////////
-        Provider.of<TasksProvider>(context, listen: false)
-            .getTasksBySelectedDate();
+        Provider.of<TasksProvider>(context, listen: false).changeSelectedDate(
+          FirebaseAuth.instance.currentUser!.uid,
+            selectedDate);
+
         /////close eddit bottomsheet////////
         Navigator.pop(context);
       }).catchError((onError) {

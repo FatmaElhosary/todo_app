@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_app/network/firebase_auth.dart';
 import 'package:todo_app/screens/home_screen.dart';
 import 'package:todo_app/shared/shared.dart';
 import 'package:todo_app/widgets/elaveted_btn.dart';
@@ -73,7 +75,20 @@ class _LoginFormState extends State<LoginForm> {
 
   void login() {
     if (formKey.currentState!.validate()) {
-      Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+      Auth.login(
+        email: emailController.text,
+        password: passwordController.text,
+      ).then((user) {
+       // Provider.of<UserProvider>(context,listen: false).updateCurrentUser(user);
+        Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+      }).catchError((err) {
+        if (err is FirebaseAuthException && err.message != null) {
+          ScaffoldMessenger.of(context).showSnackBar(getSnackbar(err.message!));
+        } else {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(getSnackbar(err.toString()));
+        }
+      });
     }
   }
 }

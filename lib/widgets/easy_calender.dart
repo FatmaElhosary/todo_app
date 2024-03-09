@@ -1,4 +1,5 @@
 import 'package:easy_date_timeline/easy_date_timeline.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/providers/settings_provider.dart';
@@ -17,8 +18,18 @@ class _EasyCalenderState extends State<EasyCalender> {
       EasyInfiniteDateTimelineController();
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var provider = Provider.of<TasksProvider>(context);
+    final userId =  FirebaseAuth.instance.currentUser!.uid;
+    /* if (_controller != null) {
+      _controller.animateToDate(provider.currentDate);
+    } */
+
     var theme = Theme.of(context);
     return Stack(
       alignment: Alignment.topCenter,
@@ -47,7 +58,7 @@ class _EasyCalenderState extends State<EasyCalender> {
                 ),
                 IconButton(
                     onPressed: () {
-                      provider.changeSelectedDate(DateTime.now());
+                      provider.changeSelectedDate(userId, DateTime.now());
                       _controller.animateToDate(provider.currentDate);
                       //_controller.animateToFocusDate();
                     },
@@ -61,6 +72,8 @@ class _EasyCalenderState extends State<EasyCalender> {
           },
           locale: Provider.of<SettingsProvider>(context).appLanguage,
           dayProps: EasyDayProps(
+            //width: 100,
+            height: 100,
             todayStyle: DayStyle(
                 dayNumStyle: theme.textTheme.headlineSmall,
                 dayStrStyle: theme.textTheme.headlineSmall,
@@ -93,7 +106,8 @@ class _EasyCalenderState extends State<EasyCalender> {
           showTimelineHeader: true,
           onDateChange: (selectedDate) {
             print('picker $selectedDate');
-            provider.changeSelectedDate(selectedDate);
+            provider.changeSelectedDate(userId, selectedDate);
+            _controller.animateToDate(provider.currentDate);
           },
         ),
 
