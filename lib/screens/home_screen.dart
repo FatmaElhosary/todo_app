@@ -126,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: theme.colorScheme.primary,
         child: Icon(
           Icons.add,
-          color: theme.colorScheme.onBackground,
+          color: theme.colorScheme.onSurface,
           size: 30,
         ),
       ),

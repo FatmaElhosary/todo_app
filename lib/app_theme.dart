@@ -10,7 +10,7 @@ class AppTheme {
         secondary: const Color(0xFFDFECDB),
         primaryContainer: const Color(0xFFFFFFFF),
         surface: const Color(0xFFFFFFFF),
-        onBackground: const Color(0xFFFFFFFF),
+        // onSurface: const Color(0xFFFFFFFF),
         onPrimaryContainer: const Color(0xFF363636),
         outline: const Color(0xFF5D9CEC),
         onErrorContainer: const Color(0xFFEC4B4B),
@@ -66,7 +66,7 @@ class AppTheme {
         outline: const Color(0xFF5D9CEC),
         onPrimary: const Color(0xFF5D9CEC),
         surface: const Color(0xFF141922),
-        onBackground: const Color(0xFFFFFFFF),
+        // onSurface: const Color(0xFFFFFFFF),
         seedColor: Colors.blue),
     useMaterial3: true,
     textTheme: const TextTheme(

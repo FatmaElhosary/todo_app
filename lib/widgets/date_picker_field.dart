@@ -33,7 +33,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
         ).then((date) {
           if (date != null) {
             setState(() {
-              print('date $date');
+              //  print('date $date');
               widget.setTaskDate(date);
               selectedDate = date;
             });

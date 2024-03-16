@@ -32,6 +32,9 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: Theme.of(context).textTheme.labelSmall!.copyWith(
+          fontSize: 20,
+          color: Theme.of(context).colorScheme.onPrimaryContainer),
       textInputAction: TextInputAction.go,
       validator: widget.validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,

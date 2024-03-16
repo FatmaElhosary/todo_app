@@ -16,7 +16,7 @@ class GlobalButton extends StatelessWidget {
         text,
         style: Theme.of(context).textTheme.labelSmall!.copyWith(
               fontSize: 18,
-              color: Theme.of(context).colorScheme.onBackground,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
       ),
     );

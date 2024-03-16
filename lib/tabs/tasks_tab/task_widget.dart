@@ -59,7 +59,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                 });
               },
               backgroundColor: theme.colorScheme.onErrorContainer,
-              foregroundColor: theme.colorScheme.onBackground,
+              foregroundColor: theme.colorScheme.onSurface,
               icon: Icons.delete,
               label: 'Delete',
               borderRadius: BorderRadius.circular(15),
@@ -72,7 +72,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                 );
               },
               backgroundColor: theme.colorScheme.primary,
-              foregroundColor: theme.colorScheme.onBackground,
+              foregroundColor: theme.colorScheme.onSurface,
               icon: Icons.edit,
               label: 'Edit',
               borderRadius: BorderRadius.circular(15),

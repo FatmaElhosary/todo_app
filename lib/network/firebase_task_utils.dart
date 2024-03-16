@@ -28,7 +28,7 @@ class FirebaseUtils {
         getTasksCollection(userId);
     final QuerySnapshot<Task> querySnapShot = await tasksCollection
         .where('dateTime', isGreaterThanOrEqualTo: startDay)
-        .where('dateTime', isLessThanOrEqualTo: endDay)
+        .where('dateTime', isLessThan: endDay)
         .orderBy('dateTime', descending: true)
         .get();
     return querySnapShot.docs.map((snapShot) => snapShot.data()).toList();

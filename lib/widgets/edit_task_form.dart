@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -28,16 +26,10 @@ class _EditFormState extends State<EditForm> {
   late DateTime selectedDate;
   final formKey = GlobalKey<FormState>();
   late AppLocalizations appLocal;
+  bool shouldIntial = true;
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero).then((value) {
-      /// Here you can have your context and do what ever you want
-      task = ModalRoute.of(context)!.settings.arguments as Task;
-      descriptionController.text = task.description;
-      taskController.text = task.title;
-      selectedDate = task.dateTime;
-    });
   }
 
   @override
@@ -45,7 +37,7 @@ class _EditFormState extends State<EditForm> {
     taskController.dispose();
     descriptionController.dispose();
     ////restore task.dateTime after it changed
-    task.dateTime = selectedDate;
+    //task.dateTime = selectedDate;
     super.dispose();
   }
 
@@ -54,6 +46,12 @@ class _EditFormState extends State<EditForm> {
     appLocal = AppLocalizations.of(context)!;
     final ThemeData theme = Theme.of(context);
     task = ModalRoute.of(context)!.settings.arguments as Task;
+    if (shouldIntial) {
+      descriptionController.text = task.description;
+      taskController.text = task.title;
+      selectedDate = task.dateTime;
+      shouldIntial = false;
+    }
     return Form(
       key: formKey,
       child: ListView(
@@ -97,8 +95,8 @@ class _EditFormState extends State<EditForm> {
             ),
           ),
           DatePickerWidget(
-            initialDateTime: task.dateTime,
-            setTaskDate: (dateTime) => task.dateTime = dateTime,
+            initialDateTime: selectedDate,
+            setTaskDate: (dateTime) => selectedDate = dateTime,
           ),
           const SizedBox(
             height: 50,
@@ -120,16 +118,15 @@ class _EditFormState extends State<EditForm> {
     if (formKey.currentState!.validate()) {
       task.title = taskController.text;
       task.description = descriptionController.text;
+      task.dateTime = selectedDate;
       FirebaseUtils.editTaskInFireStore(
-              FirebaseAuth.instance.currentUser!.uid,
-              task)
+              FirebaseAuth.instance.currentUser!.uid, task)
           .then((_) {
         debugPrint('success');
-     
+
         Provider.of<TasksProvider>(context, listen: false).changeSelectedDate(
-             FirebaseAuth.instance.currentUser!.uid,
-            task.dateTime);
-               ScaffoldMessenger.of(context).showSnackBar(
+            FirebaseAuth.instance.currentUser!.uid, task.dateTime);
+        ScaffoldMessenger.of(context).showSnackBar(
           getSnackbar(appLocal.taskAupdatedSuccessfully),
         );
         Navigator.pop(context);
